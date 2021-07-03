@@ -1,4 +1,5 @@
 const Note = require('../models/note.model.js');
+const {v4: uuidv4}=require('uuid')
 
 exports.create = async(req, res) => {
     if(!req.body.content) {
@@ -6,11 +7,13 @@ exports.create = async(req, res) => {
             message: "Note content can not be empty"
         });
     }
+    
 
     // Create a Note
     const note = new Note({
         title: req.body.title || "Untitled Note", 
-        content: req.body.content
+        content: req.body.content,
+        
     });
 
     try {

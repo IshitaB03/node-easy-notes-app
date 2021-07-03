@@ -28,7 +28,7 @@ require('./app/routes/note.routes.js')(app);
 // const noteRoute=require('./app/routes/note.routes.js')
 // app.use('/',noteRoute)
 
-app.listen(3000, () => {
+app.listen(9000, () => {
     console.log("Server is listening on port 3000");
 });
 
