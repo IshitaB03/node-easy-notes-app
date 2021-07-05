@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import './form.css'
-import Display from './Display'
 import {withRouter} from 'react-router-dom'
 
-class notes extends Component {
+
+class edit extends Component {
     constructor(props) {
         super(props)
     
@@ -24,10 +23,10 @@ class notes extends Component {
             content: event.target.value
         })
     }
-    handleSubmit= async (event )=>{
+    handleSubmit= async (event,id)=>{
         event.preventDefault()
-        await fetch('notes',{
-            method: 'POST',
+        await fetch('notes/'+id,{
+            method: 'PUT',
             headers: {'Accept':'application/json, text/plain, /',
             'Content-type':'application/json'},
             body: JSON.stringify({
@@ -35,24 +34,24 @@ class notes extends Component {
                 content : this.state.content
             })
         }).then(res => res.json())
-        .then(alert("note added"))
-    } 
-    handleClick=event =>{
+        .then(alert("note updated"))
         this.props.history.push('./display')
-    }
+    } 
 
     componentDidMount(){
         this.inputRef.current.focus()
     }
 
     render() {
+        const {state}=this.props.location
         const {title,content}=this.state
         return (
-            <div >
-                <h2><b>Create Note</b></h2>
+            <div>
+                <h2><b>Edit Note</b></h2>
                 <br></br>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={(event)=>this.handleSubmit(event,state)}>
                     <div>
+                        
                         <label>Title : </label>
                         <input type="text" ref={this.inputRef}
                         value={title}
@@ -65,14 +64,13 @@ class notes extends Component {
                         onChange={this.handleContent}/>
                     </div>
                     <div>
-                        <button className="btn btn-dark" type="submit">Submit</button>
+                        <button className="btn btn-dark" type="submit">Edit</button>
                     </div>
                 </form>
-                <br></br>
-                <button onClick={this.handleClick}>Show data</button>
             </div>
         )
     }
 }
 
-export default withRouter(notes)
+export default withRouter (edit)
+
